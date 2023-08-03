@@ -1,30 +1,21 @@
 class Bishop
-  attr_accessor :piece, :position, :symbol, :color
+  attr_reader :piece, :color, :symbol
+  attr_accessor :tile, :next_moves, :status
 
-  def initialize(color, position)
+  def initialize(color, tile)
     @piece = 'bishop'
     @color = color
     @symbol = @color == 'white' ? ' ♗ ' : ' ♝ '
-    @position = position
+    @tile = tile
+    @next_moves = []
+    @status = 'unmoved'
   end
 
-  def legal_moves
-    moves = []
-    crit = 8
-    @nw.each do |move|
-      break if move (@position - move) > (@position - crit)
-      moves << (@position - move)
-      crit += 8
-    end
-    moves
+  def reach
+    [[[1, -1], [2, -2], [3, -3], [4, -4], [5, -5], [6, -6], [7, -7]],
+    [[1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6], [7, 7]],
+    [[-1, -1], [-2, -2], [-3, -3], [-4, -4], [-5, -5], [-6, -6], [-7, -7]],
+    [[-1, 1], [-2, 2], [-3, 3], [-4, 4], [-5, 5], [-6, 6], [-7, 7]]]
   end
-
-  private
-  @nw = [-9, -18, -27, -36, -45, -54, -63]
-
-  @nw = [-63, -54, -45, -36, -27, -18, -9]-
-  @ne = [-49. -42, -35, -28, -21, -14, -7]
-  @sw = [7, 14, 21, 28, 35, 42, 49]
-  @se = [9, 18, 27, 36, 45, 54, 63]
 
 end

@@ -1,21 +1,18 @@
 class Pawn
-  attr_accessor :piece, :position, :symbol, :color
-  
-  def initialize(color, position)
+  attr_reader :piece, :color, :symbol
+  attr_accessor :tile, :next_moves, :status
+
+  def initialize(color, tile)
     @piece = 'knight'
     @color = color
     @symbol = @color == 'white' ? ' ♙ ' : ' ♟︎ '
-    @position = position
+    @tile = tile
+    @next_moves = []
+    @status = 'unmoved'
   end
 
-  def legal_moves(board)
+  def reach
+    
   end
-
-  def can_move?
-  end
-
-  private
-
-  @reach = @color == 'white' ? [-7, -8, -9] : [ 7, 8, 9]
 
 end

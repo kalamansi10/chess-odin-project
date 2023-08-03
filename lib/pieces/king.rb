@@ -1,21 +1,18 @@
 class King
-  attr_accessor :piece, :position, :symbol, :color
+  attr_reader :piece, :color, :symbol
+  attr_accessor :tile, :next_moves, :status
 
-  def initialize(color, position)
+  def initialize(color, tile)
     @piece = 'king'
     @color = color
     @symbol = @color == 'white' ? ' ♔ ' : ' ♚ '
-    @position = position
+    @tile = tile
+    @next_moves = []
+    @status = 'unmoved'
   end
 
-  def legal_moves(board)
+  def reach
+    [[[-1,0],[0,-1],[0,1],[1,0]]]
   end
-
-  def can_move?
-  end
-
-  private
-
-  @reach = [-8, -1, 1, 8]
-
+  
 end

@@ -1,21 +1,18 @@
 class Knight
-  attr_accessor :piece, :position, :symbol, :color
-  
-  def initialize(color, position)
+  attr_reader :piece, :color, :symbol
+  attr_accessor :tile, :next_moves, :status
+
+  def initialize(color, tile)
     @piece = 'knight'
     @color = color
     @symbol = @color == 'white' ? ' ♘ ' : ' ♞ '
-    @position = position
+    @tile = tile
+    @next_moves = []
+    @status = 'unmoved'
   end
 
-  def legal_moves(board)
+  def reach
+    [[[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]]]
   end
-
-  def can_move?
-  end
-
-  private
-
-  @reach = [-27, -15, 15, 27]
 
 end

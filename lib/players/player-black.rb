@@ -1,9 +1,9 @@
-require_relative './pieces/bishop.rb'
-require_relative './pieces/king.rb'
-require_relative './pieces/knight.rb'
-require_relative './pieces/pawn.rb'
-require_relative './pieces/queen.rb'
-require_relative './pieces/rook.rb'
+require_relative '../pieces/bishop'
+require_relative '../pieces/king'
+require_relative '../pieces/knight'
+require_relative '../pieces/pawn'
+require_relative '../pieces/queen'
+require_relative '../pieces/rook'
 
 class BlackPlayer
   attr_accessor :name, :pieces
@@ -28,5 +28,4 @@ class BlackPlayer
     @pieces << Knight.new('black', 2)
     @pieces << Rook.new('black', 1)
   end
-
 end
