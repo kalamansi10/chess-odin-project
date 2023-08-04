@@ -2,71 +2,16 @@ class Board
   attr_accessor :dp, :board
 
   def initialize
-    starting_board
+    empty_board
   end
 
-  def board_scan(player)
+  
+  def update_board(player)
     player.pieces.each do |piece|
-      legal_moves(piece)
+      @dp[piece.tile] = piece.symbol
     end
   end
-
-  def legal_moves(piece)
-    next_moves = []
-    reach = piece.reach.dup
-    counter = 0
-    limit = reach[0].length
-    piece_coord = coord_index[piece.tile]
-    until counter == limit || reach.length == 0
-      reach.each do |set|
-        move = set[counter]
-        destination = [(move[0] + piece_coord[0]), (move[1] + piece_coord[1])]
-        des_tile = coord_index(destination)
-        if is_out_of_bounds?(destination)
-            reach -= [set]
-        else
-          if is_occupied?(des_tile)
-            next_moves << des_tile
-          else
-            if is_ally?(des_tile, piece)
-              reach -= [set]
-            else
-              next_moves << des_tile
-              reach -= [set]
-            end
-          end
-        end
-      end
-      counter += 1
-    end
-
-    next_moves
-  end
-
-  def is_out_of_bounds?(destination)
-    destination[0] < 1 || destination[0] > 8 || destination[1] < 1 || destination[1] > 8
-  end
-
-  def is_occupied?(des_tile)
-    @board[des_tile].nil?
-  end
-
-  def is_ally?(des_tile, piece)
-    @board[des_tile].color == piece.color
-  end
-
-  def coord_index(tile = nil)
-    coordinates = [nil,
-                  [8, 1], [8, 2], [8, 3], [8, 4], [8, 5], [8, 6], [8, 7], [8, 8],
-                  [7, 1], [7, 2], [7, 3], [7, 4], [7, 5], [7, 6], [7, 7], [7, 8],
-                  [6, 1], [6, 2], [6, 3], [6, 4], [6, 5], [6, 6], [6, 7], [6, 8],
-                  [5, 1], [5, 2], [5, 3], [5, 4], [5, 5], [5, 6], [5, 7], [5, 8],
-                  [4, 1], [4, 2], [4, 3], [4, 4], [4, 5], [4, 6], [4, 7], [4, 8],
-                  [3, 1], [3, 2], [3, 3], [3, 4], [3, 5], [3, 6], [3, 7], [3, 8],
-                  [2, 1], [2, 2], [2, 3], [2, 4], [2, 5], [2, 6], [2, 7], [2, 8],
-                  [1, 1], [1, 2], [1, 3], [1, 4], [1, 5], [1, 6], [1, 7], [1, 8]]
-    tile == nil ? coordinates : coordinates.find_index(tile)      
-  end
+  
 
   def tile_notation(tile)
     [nil,
@@ -114,25 +59,17 @@ class Board
   "
   end
 
-  def starting_board
+  def empty_board
     @dp = [nil,
-      '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ',
-      '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ',
-      '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ',
-      '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ',
-      '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ',
-      '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ',
-      '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ',
-      '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ']
-  @board = [nil,
-            nil, nil, nil, nil, nil, nil, nil, nil,
-            nil, nil, nil, nil, nil, nil, nil, nil,
-            nil, nil, nil, nil, nil, nil, nil, nil,
-            nil, nil, nil, nil, nil, nil, nil, nil,
-            nil, nil, nil, nil, nil, nil, nil, nil,
-            nil, nil, nil, nil, nil, nil, nil, nil,
-            nil, nil, nil, nil, nil, nil, nil, nil,
-            nil, nil, nil, nil, nil, nil, nil, nil]
+          '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ',
+          '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ',
+          '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ',
+          '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ',
+          '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ',
+          '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ',
+          '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ',
+          '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ']
+  
   end
 
   private

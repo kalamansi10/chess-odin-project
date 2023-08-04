@@ -1,6 +1,6 @@
-class Knight
-  attr_reader :piece, :color, :symbol
-  attr_accessor :tile, :next_moves, :status
+require_relative 'pieces'
+
+class Knight < Pieces
 
   def initialize(color, tile)
     @piece = 'knight'

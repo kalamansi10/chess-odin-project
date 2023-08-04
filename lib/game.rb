@@ -12,19 +12,23 @@ require_relative 'display'
 
 game = Main.new
 game.board.display_board_wpov
-piece = Rook.new('white', 36)
+p game.order[0].name
+game.switch_player
+p game.order[0].name
 
-p legal = game.board.legal_moves(piece)
+# counter = 0
+# loop do
+#   gets
+#   save = game.board.dp.dup
+#   piece = game.white.pieces[counter]
+#   piece.next_moves.each do |move|
+#     game.board.dp[piece.tile] = "\e[31m#{piece.symbol}\e[0m"
+#     game.board.dp[move] = "\e[31m#{game.board.dp[move]}\e[0m" if game.board.dp[move] != '   '
+#     game.board.dp[move] = "\e[31m#{' ⋅ '}\e[0m" if game.board.dp[move] == '   '
+#   end
+#   game.board.display_board_wpov
+#   game.board.dp = save
+#   counter += 1
+# end
 
-legal.each do |move|
-  game.board.dp[piece.tile] = "\e[31m#{piece.symbol}\e[0m"
-  game.board.dp[move] = "\e[31m#{game.board.dp[move]}\e[0m" if game.board.dp[move] != '   '
-  game.board.dp[move] = "\e[31m#{' ⋅ '}\e[0m" if game.board.dp[move] == '   '
-end
 
-loop do
-  gets
-  game.board.display_board_wpov
-  gets
-  game.board.display_board_bpov
-end

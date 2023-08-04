@@ -1,6 +1,6 @@
-class King
-  attr_reader :piece, :color, :symbol
-  attr_accessor :tile, :next_moves, :status
+require_relative 'pieces'
+
+class King < Pieces
 
   def initialize(color, tile)
     @piece = 'king'
@@ -13,6 +13,10 @@ class King
 
   def reach
     [[[-1,0],[0,-1],[0,1],[1,0]]]
+  end
+
+  def is_checked?
+    
   end
   
 end

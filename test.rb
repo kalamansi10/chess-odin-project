@@ -1,4 +1,4 @@
 
 
 
-print [1,1].find_index(nil)
+print [1,2].find_index(2)

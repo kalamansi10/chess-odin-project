@@ -1,7 +1,7 @@
-class Queen
-  attr_reader :piece, :color, :symbol
-  attr_accessor :tile, :next_moves, :status
+require_relative 'pieces'
 
+class Queen < Pieces
+  
   def initialize(color, tile)
     @piece = 'queen'
     @color = color
