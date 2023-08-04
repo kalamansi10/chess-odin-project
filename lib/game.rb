@@ -12,9 +12,21 @@ require_relative 'display'
 
 game = Main.new
 game.board.display_board_wpov
-p game.order[0].name
-game.switch_player
-p game.order[0].name
+
+piece = King.new('white', 35)
+enemy = Queen.new('black', 36)
+piece.next_moves = piece.legal_moves
+enemy.next_moves = enemy.legal_moves
+
+piece.next_moves.each do |move|
+  game.board.dp[piece.tile] = "\e[31m#{piece.symbol}\e[0m"
+  game.board.dp[move] = "\e[31m#{game.board.dp[move]}\e[0m" if game.board.dp[move] != '   '
+  game.board.dp[move] = "\e[31m#{' ⋅ '}\e[0m" if game.board.dp[move] == '   '
+end
+game.board.display_board_wpov
+p piece.is_checked?
+
+
 
 # counter = 0
 # loop do

@@ -9,18 +9,18 @@ class Pieces
 
   def update_placements(player)
     player.pieces.each do |piece|
-      @@placements[piece.tile] = piece.color
+      @@placements[piece.tile] = piece
     end
   end
 
   def update_next_moves(player)
     player.pieces.each do |piece|
-      piece.legal_moves
+      piece.next_moves = piece.legal_moves
     end
   end
 
   def legal_moves
-    self.next_moves = []
+    result = []
     counter = 0
     limit = reach[0].length
     reach = self.reach
@@ -30,33 +30,38 @@ class Pieces
         next_move = next_move_coord(move)
         next_tile = coord_index(next_move)
         if is_out_of_bounds?(next_move) || is_ally?(next_tile)
-            reach -= [set]
+          reach -= [set]
         else
-            self.next_moves << next_tile
-            reach -= [set] if is_enemy?(next_tile)
+          result << next_tile
+          reach -= [set] if is_enemy?(next_tile)
         end
       end
       counter += 1
     end
+    result
   end
 
-  def next_move_coord(move)
-    [(move[0] + coord_index[tile][0]), (move[1] + coord_index[tile][1])]
+  def next_move_coord(coord)
+    [(coord[0] + coord_index[tile][0]), (coord[1] + coord_index[tile][1])]
   end
 
-  def is_out_of_bounds?(next_move)
-    next_move[0] < 1 || next_move[0] > 8 || next_move[1] < 1 || next_move[1] > 8
+  def is_out_of_bounds?(coord)
+    coord[0] < 1 || coord[0] > 8 || coord[1] < 1 || coord[1] > 8
   end
 
-  def is_enemy?(next_tile)
-    @@placements[next_tile] == (color == 'white' ? 'black' : 'white')
+  def is_enemy?(tile)
+    @@placements[tile] == (color == 'white' ? 'black' : 'white')
   end
 
-  def is_ally?(next_tile)
-    @@placements[next_tile] == color
+  def is_empty?(tile)
+    @@placements[tile].nil?
   end
 
-  def coord_index(next_move = nil)
+  def is_ally?(tile)
+    @@placements[tile].color == color unless is_empty?(tile)
+  end
+
+  def coord_index(coord = nil)
 
     coord_list = [nil,
                   [8, 1], [8, 2], [8, 3], [8, 4], [8, 5], [8, 6], [8, 7], [8, 8],
@@ -68,7 +73,7 @@ class Pieces
                   [2, 1], [2, 2], [2, 3], [2, 4], [2, 5], [2, 6], [2, 7], [2, 8],
                   [1, 1], [1, 2], [1, 3], [1, 4], [1, 5], [1, 6], [1, 7], [1, 8]]
 
-    next_move == nil ? coord_list : coord_list.find_index(next_move)
+    coord == nil ? coord_list : coord_list.find_index(coord)
 
   end
 
