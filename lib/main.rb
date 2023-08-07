@@ -28,6 +28,7 @@ class Main
     loop do
       movable_pieces = inplay.get_movable_pieces
       break if movable_pieces.empty?
+
       tile = select_piece(movable_pieces)
       next_tile = select_destination(tile)
       move_piece(tile, next_tile)
@@ -89,8 +90,12 @@ class Main
   def add_castling(piece)
     cn = piece.tile - 2
     cp = piece.tile + 2
-    piece.move_list += [cn] if !inplay.pieces[1].nil? && inplay.pieces[1].status == 'unmoved' && inplay.pieces[1].move_list.any?(piece.tile - 1)
-    piece.move_list += [cp] if !inplay.pieces[2].nil? && inplay.pieces[2].status == 'unmoved' && inplay.pieces[2].move_list.any?(piece.tile + 1)
+    if !inplay.pieces[1].nil? && inplay.pieces[1].status == 'unmoved' && inplay.pieces[1].move_list.any?(piece.tile - 1)
+      piece.move_list += [cn]
+    end
+    if !inplay.pieces[2].nil? && inplay.pieces[2].status == 'unmoved' && inplay.pieces[2].move_list.any?(piece.tile + 1)
+      piece.move_list += [cp]
+    end
     [0, cn, cp]
   end
 
@@ -131,6 +136,7 @@ class Main
     loop do
       input = gets.chomp
       return input if input.length > 0 && input.length < 10
+
       board.display_board(inplay.color)
       display_invalid_input
     end
@@ -139,7 +145,8 @@ class Main
   def check_upgrade
     loop do
       input = gets.chomp.upcase
-      return input if ['Q', 'N', 'B', 'R'].any?(input)
+      return input if %w[Q N B R].any?(input)
+
       board.display_board(inplay.color)
       display_invalid_input
     end
@@ -150,6 +157,7 @@ class Main
     loop do
       input = gets.chomp.downcase
       return notations_array(input) if tiles_notation.any?(input)
+
       board.display_board(inplay.color)
       display_invalid_input
     end

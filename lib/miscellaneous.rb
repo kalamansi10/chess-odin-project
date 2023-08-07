@@ -57,11 +57,11 @@ module Miscellaneous
     "
   end
 
-
   def get_pieces_info_str(pieces)
     result = ''
     pieces.each do |piece|
       next if piece.status == 'dead'
+
       result += "[#{pp("#{notations_array[piece.tile]}-#{piece.piece}")}] "
     end
     result
@@ -100,5 +100,4 @@ module Miscellaneous
   def pp(string) # purple_txt
     "\e[34m#{string}\e[0m"
   end
-
 end

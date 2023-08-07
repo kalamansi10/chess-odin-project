@@ -37,7 +37,6 @@ class Pieces
     result
   end
 
-
   def update_placements(player)
     player.pieces.each do |piece|
       @@placements[piece.tile] = piece

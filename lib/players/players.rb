@@ -49,9 +49,8 @@ class Players
       Knight.new(color, tile)
     when 'B'
       Bishop.new(color, tile)
-    when 'R' 
+    when 'R'
       Rook.new(color, tile)
     end
   end
-
 end

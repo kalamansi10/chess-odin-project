@@ -27,10 +27,10 @@ class Board
     @dp = orig
   end
 
-  def display_board(color=nil)
+  def display_board(color = nil)
     case color
     when 'white'
-    print "
+      print "
     #{pp('8')} │#{wt(dp[1])}#{gr(dp[2])}#{wt(dp[3])}#{gr(dp[4])}#{wt(dp[5])}#{gr(dp[6])}#{wt(dp[7])}#{gr(dp[8])}
     #{pp('7')} │#{gr(dp[9])}#{wt(dp[10])}#{gr(dp[11])}#{wt(dp[12])}#{gr(dp[13])}#{wt(dp[14])}#{gr(dp[15])}#{wt(dp[16])}
     #{pp('6')} │#{wt(dp[17])}#{gr(dp[18])}#{wt(dp[19])}#{gr(dp[20])}#{wt(dp[21])}#{gr(dp[22])}#{wt(dp[23])}#{gr(dp[24])}
@@ -43,7 +43,7 @@ class Board
         #{pp('a')}  #{pp('b')}  #{pp('c')}  #{pp('d')}  #{pp('e')}  #{pp('f')}  #{pp('g')}  #{pp('h')}
   "
     when 'black'
-    print "
+      print "
     #{pp('1')} │#{wt(dp[64])}#{gr(dp[63])}#{wt(dp[62])}#{gr(dp[61])}#{wt(dp[60])}#{gr(dp[59])}#{wt(dp[58])}#{gr(dp[57])}
     #{pp('2')} │#{gr(dp[56])}#{wt(dp[55])}#{gr(dp[54])}#{wt(dp[53])}#{gr(dp[52])}#{wt(dp[51])}#{gr(dp[50])}#{wt(dp[49])}
     #{pp('3')} │#{wt(dp[48])}#{gr(dp[47])}#{wt(dp[46])}#{gr(dp[45])}#{wt(dp[44])}#{gr(dp[43])}#{wt(dp[42])}#{gr(dp[41])}
@@ -85,5 +85,4 @@ class Board
   def pp(string) # purple_txt
     "\e[34m#{string}\e[0m"
   end
-
 end
