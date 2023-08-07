@@ -4,7 +4,7 @@ class PlayerBlack < Players
   def initialize
     @color = 'black'
     @pieces = [King.new('black', 5),
-      Rook.new('black', 1),
+              Rook.new('black', 1),
               Rook.new('black', 8),
               Pawn.new('black', 16),
               Pawn.new('black', 15),

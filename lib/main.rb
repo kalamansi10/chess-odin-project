@@ -20,7 +20,7 @@ class Main
     update_state
     board.display_board
     display_game_start
-    #set_name
+    set_name
     game_loop
   end
 
@@ -31,8 +31,8 @@ class Main
       tile = select_piece(movable_pieces)
       next_tile = select_destination(tile)
       move_piece(tile, next_tile)
-      update_state
       switch_player
+      update_state
     end
     game_over
   end
@@ -49,8 +49,21 @@ class Main
 
   def move_piece(tile, next_tile)
     @waiting.pieces = @waiting.pieces - [pieces.get_piece(next_tile)] if pieces.is_occupied?(next_tile)
+    is_pawn_upgradable?(tile, next_tile) if pieces.get_piece(tile).piece == 'P'
     pieces.move_piece(tile, next_tile)
     board.move_piece(tile, next_tile)
+  end
+
+  def upgrade_pawn(tile, pawn)
+    @inplay.pieces = @inplay.pieces - [pawn]
+    board.display_board(inplay.color)
+    display_pick_upgrade(inplay.name)
+    @inplay.pieces << @inplay.upgrade_pawn(tile, check_upgrade)
+  end
+
+  def is_pawn_upgradable?(tile, next_tile)
+    pawn = pieces.get_piece(tile)
+    upgrade_pawn(next_tile, pawn) if next_tile < 9 || next_tile > 56
   end
 
   def select_piece(movable_pieces)
@@ -118,6 +131,15 @@ class Main
     loop do
       input = gets.chomp
       return input if input.length > 0 && input.length < 10
+      board.display_board(inplay.color)
+      display_invalid_input
+    end
+  end
+
+  def check_upgrade
+    loop do
+      input = gets.chomp.upcase
+      return input if ['Q', 'N', 'B', 'R'].any?(input)
       board.display_board(inplay.color)
       display_invalid_input
     end

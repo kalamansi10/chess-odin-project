@@ -41,4 +41,17 @@ class Players
     pieces[0].is_checked?
   end
 
+  def upgrade_pawn(tile, piece)
+    case piece
+    when 'Q'
+      Queen.new(color, tile)
+    when 'N'
+      Knight.new(color, tile)
+    when 'B'
+      Bishop.new(color, tile)
+    when 'R' 
+      Rook.new(color, tile)
+    end
+  end
+
 end

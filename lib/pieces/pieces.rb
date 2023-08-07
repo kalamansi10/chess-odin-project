@@ -19,6 +19,7 @@ class Pieces
   end
 
   def move_piece(tile, next_tile)
+    @@placements[tile].status = 'moved'
     @@placements[next_tile] = @@placements[tile]
     @@placements[next_tile].tile = next_tile
     @@placements[tile] = nil

@@ -41,6 +41,14 @@ module Miscellaneous
     "
   end
 
+  def display_pick_upgrade(name)
+    print "
+    #{pp(name)}, select pawn upgrade.
+    [#{pp('Q - Queen')}] [#{pp('N - Knight')}] [#{pp('B - Bishop')}] [#{pp('R - Rook')}]
+
+    "
+  end
+
   def display_invalid_input
     print "
     Invalid input.
