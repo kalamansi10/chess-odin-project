@@ -41,6 +41,12 @@ class Main
 
   include Miscellaneous
 
+  def game_over
+    board.dp[inplay.pieces[0].tile] = "\e[31m#{inplay.pieces[0].symbol}\e[0m"
+    board.display_board(inplay.color)
+    print "\nCHECKMATE\n\n"
+  end
+
   def move_piece(tile, next_tile)
     @waiting.pieces = @waiting.pieces - [pieces.get_piece(next_tile)] if pieces.is_occupied?(next_tile)
     pieces.move_piece(tile, next_tile)
@@ -53,16 +59,35 @@ class Main
     check_notation(inplay.get_movable_pieces_tiles)
   end
 
-  def game_over
-    board.dp[inplay.pieces[0].tile] = "\e[31m#{inplay.pieces[0].symbol}\e[0m"
-    board.display_board(inplay.color)
-    print "\nCHECKMATE\n\n"
+  def select_destination(tile)
+    selected_piece = pieces.get_piece(tile)
+    castle_moves = add_castling(selected_piece) if is_castleable?(selected_piece)
+    board.highlight_move_list(pieces.get_piece(tile))
+    display_pick_destination(inplay.name, selected_piece.move_list)
+    result = check_notation(pieces.get_piece(tile).move_list)
+    castle(result, selected_piece) if is_castleable?(selected_piece) && castle_moves.any?(result)
+    result
   end
 
-  def select_destination(tile)
-    board.highlight_move_list(pieces.get_piece(tile))
-    display_pick_destination(inplay.name, pieces.get_piece(tile).move_list)
-    check_notation(pieces.get_piece(tile).move_list)
+  def is_castleable?(piece)
+    piece.piece == 'K' && piece.status == 'unmoved'
+  end
+
+  def add_castling(piece)
+    cn = piece.tile - 2
+    cp = piece.tile + 2
+    piece.move_list += [cn] if !inplay.pieces[1].nil? && inplay.pieces[1].status == 'unmoved' && inplay.pieces[1].move_list.any?(piece.tile - 1)
+    piece.move_list += [cp] if !inplay.pieces[2].nil? && inplay.pieces[2].status == 'unmoved' && inplay.pieces[2].move_list.any?(piece.tile + 1)
+    [0, cn, cp]
+  end
+
+  def castle(tile, piece)
+    if tile < piece.tile
+      move_piece(inplay.pieces[1].tile, inplay.pieces[1].tile + 3)
+    elsif tile > piece.tile
+      move_piece(inplay.pieces[2].tile, inplay.pieces[2].tile - 2)
+    end
+    board.display_board(inplay.color)
   end
 
   def update_state
