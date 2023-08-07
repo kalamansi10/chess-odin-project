@@ -1,2 +1,1 @@
-
-require_relative './players/player-white'
+game.play

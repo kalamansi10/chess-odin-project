@@ -6,18 +6,17 @@ require_relative 'rook'
 require_relative 'queen'
 
 class King < Pieces
-
   def initialize(color, tile)
-    @piece = 'king'
+    @piece = 'K'
     @color = color
     @symbol = @color == 'white' ? ' ♔ ' : ' ♚ '
     @tile = tile
-    @next_moves = []
+    @move_list = []
     @status = 'unmoved'
   end
 
   def reach
-    [[[-1,0],[0,-1],[0,1],[1,0]]]
+    result = [[[-1, -1]], [[-1, 0]], [[-1, 1]], [[0, -1]], [[0, 1]], [[1, -1]], [[1, 0]], [[1, 1]]]
   end
 
   def is_checked?
@@ -29,11 +28,10 @@ class King < Pieces
     ref_pieces.each do |piece|
       ref_tiles = piece.legal_moves
       ref_tiles.each do |tile|
-        next if is_empty?(tile) || is_ally?(tile)
+        next if get_piece(tile).nil? || is_ally?(tile)
         return true if @@placements[tile].piece == piece.piece
       end
     end
     false
   end
-  
 end

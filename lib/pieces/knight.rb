@@ -1,18 +1,16 @@
 require_relative 'pieces'
 
 class Knight < Pieces
-
   def initialize(color, tile)
-    @piece = 'knight'
+    @piece = 'N'
     @color = color
     @symbol = @color == 'white' ? ' ♘ ' : ' ♞ '
     @tile = tile
-    @next_moves = []
+    @move_list = []
     @status = 'unmoved'
   end
 
   def reach
-    [[[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]]]
+    [[[-2, -1]], [[-2, 1]], [[-1, -2]], [[-1, 2]], [[1, -2]], [[1, 2]], [[2, -1]], [[2, 1]]]
   end
-
 end
